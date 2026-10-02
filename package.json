@@ -1,0 +1,30 @@
+{
+  "name": "license-manager",
+  "private": true,
+  "license": "Unlicense",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/ensure-admin-dist.mjs && pnpm --parallel --stream --filter @license-manager/worker --filter @license-manager/admin dev",
+    "env:init": "node scripts/init-dev-env.mjs",
+    "env:ensure-master": "node scripts/ensure-master-password-env.mjs",
+    "env:check:production": "node scripts/check-production-secrets.mjs",
+    "build": "pnpm --filter @license-manager/admin build && pnpm --filter @license-manager/worker build",
+    "build:production": "pnpm --filter @license-manager/admin build && pnpm --filter @license-manager/worker build:production",
+    "type-check": "pnpm --filter @license-manager/worker type-check && pnpm --filter @license-manager/admin type-check",
+    "check:english": "node scripts/scan-cjk.mjs",
+    "test": "pnpm --filter @license-manager/worker test && pnpm --filter @license-manager/admin test",
+    "e2e": "node scripts/e2e-serve.mjs",
+    "deploy": "pnpm build:production && pnpm --filter @license-manager/worker deploy",
+    "db:migrate:local": "pnpm --filter @license-manager/worker db:migrate:local",
+    "db:migrate:remote": "pnpm --filter @license-manager/worker db:migrate:remote"
+  },
+  "engines": {
+    "node": ">=20.11.0",
+    "pnpm": ">=11.7.0"
+  },
+  "packageManager": "pnpm@11.7.0",
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
+  }
+}

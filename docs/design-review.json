@@ -1,0 +1,46 @@
+{
+  "verdict": "APPROVED",
+  "findings": [
+    {
+      "id": 1,
+      "severity": "NIT",
+      "title": "WebCrypto Ed25519 availability is an external runtime fact, mitigated but not pre-proven",
+      "where": "design-signed-license.md §4.2, §10.1",
+      "problem": "Workers runtime support for crypto.subtle Ed25519 is asserted as 'expected'; only HMAC/PBKDF2 are proven in-repo (verified crypto.ts). Design proceeds on an unverified primitive-availability assumption until the implementation smoke test runs.",
+      "fix": "Keep the §10.1 importKey/sign/verify Ed25519 smoke test as the FIRST finalize-e2e step; gate WebCrypto-vs-@noble on its pasted result and record the outcome in memory/decisions.md (SL-1)."
+    },
+    {
+      "id": 2,
+      "severity": "NIT",
+      "title": "AC-2 'exactly twelve fields' depends on a design-asserted edit to the requirements doc",
+      "where": "design-signed-license.md §0.1, §3.2; requirements FR-2/AC-2",
+      "problem": "Design claims it edited requirements FR-2/AC-2 to include activation_allowed. The requirements file read does list all twelve fields, so they agree now, but doc-mutates-doc coupling can drift silently if either is regenerated.",
+      "fix": "Add a conformance test asserting the signed payload key set equals the AC-2 enumerated set from one shared constant, so neither doc nor code can drift without a red test."
+    },
+    {
+      "id": 3,
+      "severity": "NIT",
+      "title": "issued_at == server_time duplication carried without a current consumer",
+      "where": "design-signed-license.md §3.2",
+      "problem": "issued_at and server_time are specified as always equal 'by construction', kept only for a hypothetical future protocol version. Two identical signed fields with no divergence rule in v1.",
+      "fix": "In CLIENT_INTEGRATION.md require the v1 client to reject payloads where issued_at != server_time (turning the redundancy into a free tamper check), or state the client ignores issued_at in v1. Prefer the former."
+    },
+    {
+      "id": 4,
+      "severity": "NIT",
+      "title": "Freshness predicate accepts in-window replays and the max-age ceiling is a server-controlled soft knob",
+      "where": "design-signed-license.md §8.4 steps 3/5; OQ-8",
+      "problem": "Replay defense is server_time monotonicity + max-age of verification_interval_seconds + 300s SKEW; a still-in-window replay is accepted (meets AC-28/OQ-8). A misconfigured large server interval widens the replay window silently.",
+      "fix": "Document a hard client-side ceiling, e.g. min(verification_interval_seconds, 86400) + SKEW, in CLIENT_INTEGRATION.md and the checker; carry the server-issued nonce as the OQ-8 follow-up."
+    },
+    {
+      "id": 5,
+      "severity": "NIT",
+      "title": "Shared app_secret in checker/desktop is an auto-hold DoS surface; default correct, document residual risk at contract level",
+      "where": "design-signed-license.md §3.3, §6.3, §14 (OQ-1); §11 planned SECURITY.md rows",
+      "problem": "/verify and /report authenticate with a shared app_secret, so any holder can report. Auto-hold correctly defaults to corroboration (N>=2 distinct installation_hash, single-report-immediate-hold OFF) and routes the real fix via OQ-1 ASK-FIRST. Reasonable Phase-1 posture, not a defect.",
+      "fix": "In CLIENT_INTEGRATION.md state app_secret is a shared app credential (not per-device identity) and /report is advisory/corroboration-gated; carry OQ-1 device-token alternative as the documented path if the desktop threat model later forbids shipping app_secret. No Phase-1 code change."
+    }
+  ],
+  "reviewDoc": "c:\\Users\\rishu\\Desktop\\license-manager-main\\license-manager-main/docs/design-review.md"
+}

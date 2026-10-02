@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "pnpm --filter @license-manager/admin build",
+  "outputDirectory": "admin/dist",
+  "functions": {
+    "api/[[...route]].ts": {
+      "runtime": "nodejs22.x"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/[[...route]]"
+    }
+  ]
+}

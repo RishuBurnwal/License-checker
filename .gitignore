@@ -1,0 +1,61 @@
+# === Dependencies ===
+node_modules
+.pnpm-store
+
+# === Secrets & private config (NEVER commit) ===
+**/.dev.vars
+**/wrangler.production.toml
+!**/.dev.vars.example
+!**/wrangler.production.example.toml
+
+# === Build output ===
+dist
+admin/dist
+worker/dist
+coverage
+
+# === Cloudflare / Wrangler local state ===
+.wrangler
+
+# === Logs & local files ===
+*.local
+*.log
+
+# === Python (main.py launcher) ===
+__pycache__/
+*.py[cod]
+*$py.class
+.venv
+venv
+
+# === Local launcher state (main.py): first-run flag + personal update URL ===
+launcher.config.json
+
+# === Graphify generated knowledge graph (regenerated with `graphify update .`) ===
+graphify-out/
+
+# === Agent / workflow scratch artifacts ===
+.agents/
+.kiro/
+.monkeycode/
+.ohmyagent/
+
+# === Internal dev-process docs & test harness (not part of the shipped project) ===
+brain-architecture/
+memory/
+project-audit/
+e2e/
+FINAL_IMPLEMENTATION_REPORT.md
+Prompt.md
+
+# === Playwright E2E run artifacts ===
+.playwright-cli
+test-results
+e2e/playwright-report
+e2e/.playwright-cache
+
+# === Editor / OS ===
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
