@@ -14,13 +14,13 @@ export function SdkPage() {
   const { message } = AntApp.useApp();
   const { apps } = useCatalogs();
   const setPageTitleExtra = usePageTitleExtra();
-  const [selectedAppId, setSelectedAppId] = useState<string>(() => apps[0]?.app_id ?? "app_xxx");
+  const [selectedAppId, setSelectedAppId] = useState<string>(() => apps[0]?.app_id ?? "");
   const apiBaseUrl = window.location.origin;
   const appOptions = useMemo(() => apps.map((app) => ({ value: app.app_id, label: formatAppOptionLabel(app, t) })), [apps, t]);
   const sdkEntries = useMemo(() => createLicenseSdkEntries(selectedAppId, apiBaseUrl, t), [apiBaseUrl, selectedAppId, t]);
 
   useEffect(() => {
-    if (selectedAppId === "app_xxx" && apps[0]) {
+    if (!selectedAppId && apps[0]) {
       setSelectedAppId(apps[0].app_id);
     }
   }, [apps, selectedAppId]);

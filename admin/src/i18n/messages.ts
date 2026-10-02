@@ -255,7 +255,7 @@ export const dictionaries = {
       appNameRequired: "Please enter app name",
       platformRequired: "Please select platform",
       appDescription: "App Description",
-      purchaseUrlPlaceholder: "https://example.com/buy-license",
+      purchaseUrlPlaceholder: "https://your-store.com/buy",
       purchaseUrlInvalid: "Please enter a valid purchase URL",
       copyAppSecret: "Copy app secret"
     },

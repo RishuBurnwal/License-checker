@@ -28,7 +28,7 @@ export function PlaygroundPage() {
   const { t } = useI18n();
   const { apps } = useCatalogs();
   const [playgroundForm] = Form.useForm<PlaygroundValues>();
-  const [selectedAppId, setSelectedAppId] = useState<string>(() => apps[0]?.app_id ?? "app_xxx");
+  const [selectedAppId, setSelectedAppId] = useState<string>(() => apps[0]?.app_id ?? "");
   const [selectedAction, setSelectedAction] = useState<ClientAction>("activate");
   const [playgroundResult, setPlaygroundResult] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -38,7 +38,7 @@ export function PlaygroundPage() {
   const requestPayload = useMemo(() => createRequestPayload(selectedAction, selectedAppId, t), [selectedAction, selectedAppId, t]);
 
   useEffect(() => {
-    if (selectedAppId === "app_xxx" && apps[0]) {
+    if (!selectedAppId && apps[0]) {
       setSelectedAppId(apps[0].app_id);
       playgroundForm.setFieldValue("app_id", apps[0].app_id);
     }
@@ -59,7 +59,7 @@ export function PlaygroundPage() {
             }}
             initialValues={{
               action: "activate",
-              app_id: selectedAppId,
+              app_id: selectedAppId || undefined,
               device_fingerprint: ""
             }}
             onValuesChange={(changed) => {

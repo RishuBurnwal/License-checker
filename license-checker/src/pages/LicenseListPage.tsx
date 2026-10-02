@@ -236,19 +236,19 @@ export function LicenseListPage() {
             <Input placeholder="A name for this license (optional)" />
           </Form.Item>
           <Form.Item label="Server base URL" name="serverBaseUrl" rules={[{ required: true, message: "Server base URL is required" }]}>
-            <Input placeholder="https://your-license-server.example" />
+            <Input placeholder="http://localhost:8787" />
           </Form.Item>
           <Form.Item label="License Key" name="licenseKey" rules={[{ required: true, message: "License key is required" }]}>
-            <Input placeholder="LM-XXXXX-XXXXX-XXXXX-XXXXX" />
+            <Input placeholder="Paste your license key here" />
           </Form.Item>
           <Form.Item label="Product ID (app_id)" name="productId" rules={[{ required: true, message: "Product ID is required" }]}>
-            <Input placeholder="app_xxx" />
+            <Input placeholder="app_id from the admin console" />
           </Form.Item>
           <Form.Item label="Installation ID" name="installationId" rules={[{ required: true, message: "Installation ID is required" }]}>
-            <Input placeholder="stable-installation-id" />
+            <Input placeholder="A stable unique ID for this device or installation" />
           </Form.Item>
           <Form.Item label="App Secret" name="appSecret" rules={[{ required: true, message: "App secret is required" }]}>
-            <Input.Password placeholder="sec_xxx (kept on this machine only)" />
+            <Input.Password placeholder="app_secret shown once when the app was created" />
           </Form.Item>
           <Button type="primary" htmlType="submit">
             Add License

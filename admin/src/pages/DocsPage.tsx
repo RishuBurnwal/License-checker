@@ -29,7 +29,7 @@ export function DocsPage() {
   const { t } = useI18n();
   const { apps } = useCatalogs();
   const setPageTitleExtra = usePageTitleExtra();
-  const [selectedAppId, setSelectedAppId] = useState<string>(() => apps[0]?.app_id ?? "app_xxx");
+  const [selectedAppId, setSelectedAppId] = useState<string>(() => apps[0]?.app_id ?? "");
   const apiBaseUrl = window.location.origin;
   const appOptions = useMemo(() => apps.map((app) => ({ value: app.app_id, label: formatAppOptionLabel(app, t) })), [apps, t]);
   const clientActions = useMemo(() => getClientActions(t), [t]);
@@ -38,10 +38,10 @@ export function DocsPage() {
   const jsDemo = useMemo(() => createJavaScriptDemo(selectedAppId, apiBaseUrl, t), [apiBaseUrl, selectedAppId, t]);
   const curlDemo = useMemo(() => createCurlDemo("activate", selectedAppId, apiBaseUrl, t), [apiBaseUrl, selectedAppId, t]);
   const htmlDemo = useMemo(() => createHtmlDemo(selectedAppId, apiBaseUrl, t), [apiBaseUrl, selectedAppId, t]);
-  const responseExample = useMemo(() => createResponseExample(t), [t]);
+  const responseExample = useMemo(() => createResponseExample(t, selectedAppId), [t, selectedAppId]);
 
   useEffect(() => {
-    if (selectedAppId === "app_xxx" && apps[0]) {
+    if (!selectedAppId && apps[0]) {
       setSelectedAppId(apps[0].app_id);
     }
   }, [apps, selectedAppId]);

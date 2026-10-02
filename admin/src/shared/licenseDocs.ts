@@ -99,13 +99,13 @@ export function getClientActionFlows(t: Translate): Record<ClientAction, ClientF
 
 export const clientActions = getClientActions((key) => key);
 
-export function createResponseExample(t: Translate) {
+export function createResponseExample(t: Translate, appId?: string) {
   return `{
   "ok": true,
   "data": {
     "valid": true,
     "device_bound": true,
-    "app_id": "app_xxx",
+    "app_id": "${appId ?? "<your-app-id>"}",
     "plan": {
       "code": "monthly",
       "name": "${escapeJsString(t("docs.responsePlanName"))}",
@@ -135,7 +135,7 @@ export function createRequestPayload(action: ClientAction, appId: string, t?: Tr
       : {
           app_id: appId,
           app_secret: secretPlaceholder,
-          code: "LM-XXXXX-XXXXX-XXXXX-XXXXX",
+          code: "<your-license-key>",
           device_fingerprint: "stable-device-id",
           ...(action === "heartbeat" || action === "renew" ? { session_token: "session-token-from-activate" } : {})
         };
